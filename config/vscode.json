@@ -1,0 +1,148 @@
+{
+  // 파일 저장시에 후행에 삽입된 공백 제거
+  "files.trimTrailingWhitespace": true,
+  // 파일 저장시에 마지막 줄바꿈 삽입
+  "files.insertFinalNewline": true,
+  // 파일 저장시에 마지막 줄바꿈 이후의 모든 줄바꿈 제거
+  "files.trimFinalNewlines": true,
+  // markdown whitespace 적용
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  // eslint 설정값에 맞추어 저장시에 에러 사항을 fix 합니다.
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  // import 시 경로 절대경로로 세팅
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.suggestionActions.enabled": false,
+  // extension code-spell-checker - 예외 처리 항목
+  "cSpell.words": ["", "autodocs", "nextjs", "testid"],
+  // extension Huuums.vscode-fast-folder-structure 설정
+  "folderTemplates.structures": [
+    {
+      "name": "React Component Template A (component, style, stories)",
+      "structure": [
+        {
+          "fileName": "<FTName | pascalcase>.tsx",
+          "template": "React Component"
+        },
+        {
+          "fileName": "<FTName | pascalcase>.style.tsx",
+          "template": "React Component Style"
+        },
+        {
+          "fileName": "<FTName | pascalcase>.stories.tsx",
+          "template": "React Component Stories"
+        }
+      ]
+    },
+    {
+      "name": "React Component Template B (component, style, stories, test)",
+      "structure": [
+        {
+          "fileName": "<FTName | pascalcase>.tsx",
+          "template": "React Component"
+        },
+        {
+          "fileName": "<FTName | pascalcase>.style.tsx",
+          "template": "React Component Style"
+        },
+        {
+          "fileName": "<FTName | pascalcase>.stories.tsx",
+          "template": "React Component Stories"
+        },
+        {
+          "fileName": "<FTName | pascalcase>.test.tsx",
+          "template": "React Component Test"
+        }
+      ]
+    }
+  ],
+  // extension Huuums.vscode-fast-folder-structure 설정
+  "folderTemplates.fileTemplates": {
+    "React Component": [
+      "import React from 'react';",
+      "import { style } from './<FTName | pascalcase>.style';",
+      "",
+      "export interface I<FTName | pascalcase>Props {",
+      "  text: string;",
+      "  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;",
+      "}",
+      "",
+      "const <FTName | pascalcase> = ({ text, onClick }: I<FTName | pascalcase>Props) => {",
+      "  return (",
+      "    <div data-testid=\"<FTName | pascalcase>\" css={style} onClick={onClick}>",
+      "      <FTName | pascalcase> {text}",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default <FTName | pascalcase>;",
+      ""
+    ],
+    "React Component Style": ["import { css } from '@emotion/react';", "", "export const style = css``;", ""],
+    "React Component Stories": [
+      "import <FTName | pascalcase> from './<FTName | pascalcase>';",
+      "import type { Meta, StoryObj } from '@storybook/react';",
+      "",
+      "type TPStory = StoryObj<typeof <FTName | pascalcase>>;",
+      "",
+      "export default {",
+      "  title: 'components/<FTName | pascalcase>',",
+      "  component: <FTName | pascalcase>,",
+      "  tags: ['autodocs'],",
+      "  argTypes: {",
+      "    onClick: {",
+      "      description: 'Optional click handler',",
+      "    },",
+      "  },",
+      "} satisfies Meta<typeof <FTName | pascalcase>>;",
+      "",
+      "export const Common: TPStory = {",
+      "  args: {",
+      "    text: 'temp',",
+      "  },",
+      "};",
+      ""
+    ],
+    "React Component Test": [
+      "import { render } from '@testing-library/react';",
+      "import userEvent from '@testing-library/user-event';",
+      "import { isValidReactSyntheticEvent, isValidReactEventType } from '@/__mocks__/isValidReactEvent';",
+      "import <FTName | pascalcase> from './<FTName | pascalcase>';",
+      "",
+      "describe('<FTName | pascalcase>', () => {",
+      "  it('renders a component', async () => {",
+      "    const componentTestId = '<FTName | pascalcase>';",
+      "    const renderText = 'text';",
+      "",
+      "    const handleClick = jest.fn();",
+      "",
+      "    const { getByTestId, getByText } = render(<<FTName | pascalcase> onClick={handleClick} text={renderText} />);",
+      "",
+      "    const component = getByTestId(componentTestId);",
+      "",
+      "    // element render",
+      "    expect(component).toBeInTheDocument();",
+      "    expect(getByText(new RegExp(renderText))).toBeInTheDocument();",
+      "",
+      "    // trigger click & result test",
+      "    await userEvent.click(component);",
+      "    expect(handleClick).toBeCalledTimes(1);",
+      "",
+      "    const handleClickResult = handleClick.mock.calls[0][0];",
+      "    expect(isValidReactSyntheticEvent(handleClickResult)).toBeTruthy();",
+      "    expect(isValidReactEventType(handleClickResult, 'click')).toBeTruthy();",
+      "  });",
+      "});",
+      ""
+    ]
+  },
+  // extension Lokalise.i18n-ally 설정
+  "i18n-ally.localesPaths": "public/assets/locales/",
+  "i18n-ally.keystyle": "auto",
+  "i18n-ally.sourceLanguage": "ko",
+  "i18n-ally.pathMatcher": "{locale}/translation.json"
+}
+
